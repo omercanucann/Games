@@ -39,14 +39,17 @@ static int	check_exit_condition(t_game *game, int new_x,
 {
 	if (game->map[new_y][new_x] == 'E')
 	{
-		game->check = 1;
 		if (count_collectibles(game) == 0)
 		{
 			ft_printf("You won in %d moves!\n", move_count + 1);
 			game->game_over = 1;
 			return (1);
 		}
-		return (1);
+		else
+		{
+			ft_printf("Collect all items first!\n");
+			return (2);
+		}
 	}
 	return (0);
 }
@@ -66,18 +69,19 @@ void	move_player(t_game *game, int new_x, int new_y, int direction)
 	int			pos[2];
 	int			new_pos[2];
 	static int	move_count = 0;
+	int			exit_result;
 
 	find_player_position(game, &pos[0], &pos[1]);
 	new_pos[0] = new_x;
 	new_pos[1] = new_y;
 	if (game->map[new_y][new_x] == '1')
 		return ;
+	exit_result = check_exit_condition(game, new_x, new_y, move_count);
+	if (exit_result == 2)
+		return ;
 	update_player_sprite(game, direction);
 	game->player_dir = direction;
-	check_exit_condition(game, new_x, new_y, move_count);
 	update_player_map(game, pos, new_pos);
-	if (game->check == 1)
-		game->check = 2;
 	move_count++;
 	ft_printf("Moves: %d\n", move_count);
 	draw_map(game);

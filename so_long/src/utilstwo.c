@@ -83,15 +83,6 @@ void	update_player_map(t_game *game, int *pos, int *new_pos)
 	player_y = pos[1];
 	new_x = new_pos[0];
 	new_y = new_pos[1];
-	if (game->check == 2)
-	{
-		game->map[player_y][player_x] = 'E';
-		game->map[new_y][new_x] = 'P';
-		game->check = 0;
-	}
-	else
-	{
-		game->map[player_y][player_x] = '0';
-		game->map[new_y][new_x] = 'P';
-	}
+	game->map[player_y][player_x] = '0';
+	game->map[new_y][new_x] = 'P';
 }

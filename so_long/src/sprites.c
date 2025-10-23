@@ -71,13 +71,22 @@ void	draw_tile(t_game *game, char tile, int x, int y)
 {
 	void	*img;
 	int		i;
+	int		draw_y;
 
 	if (tile == '1')
 		img = game->wall;
 	else if (tile == 'E')
 		img = game->exit;
 	else if (tile == 'P')
+	{
 		img = game->player;
+		draw_y = y * TILE_SIZE + game->idle_offset_y;
+		mlx_put_image_to_window(game->mlx, game->win, game->floor, 
+			x * TILE_SIZE, y * TILE_SIZE);
+		mlx_put_image_to_window(game->mlx, game->win,
+			img, x * TILE_SIZE, draw_y);
+		return ;
+	}
 	else if (tile == 'C')
 		img = game->collection;
 	else

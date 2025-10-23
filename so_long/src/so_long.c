@@ -41,9 +41,14 @@ int	game_loop(t_game *game)
 	if (game->game_over)
 		close_game(game);
 	game->frame_count++;
+	update_idle_animation(game);
 	if (game->frame_count % ENEMY_MOVE_DELAY == 0)
 	{
 		update_enemies(game);
+		draw_map(game);
+	}
+	else if (game->frame_count % 2 == 0)
+	{
 		draw_map(game);
 	}
 	return (0);

@@ -26,7 +26,7 @@
 # define DIR_UP 2
 # define DIR_DOWN 3
 # define MAX_ENEMIES 50
-# define ENEMY_MOVE_DELAY 12000
+# define ENEMY_MOVE_DELAY 1200
 typedef struct s_enemy
 {
 	int	x;
@@ -66,6 +66,9 @@ typedef struct s_game
 	t_enemy	enemies[MAX_ENEMIES];
 	int		enemy_count;
 	int		frame_count;
+	int		idle_frame;
+	int		is_moving;
+	int		idle_offset_y;
 }	t_game;
 
 void	ft_error(char *str, t_game *game);
@@ -96,4 +99,5 @@ void	update_enemies(t_game *game);
 int		check_player_collision(t_game *game);
 void	move_enemy(t_game *game, int enemy_idx);
 int		game_loop(t_game *game);
+void	update_idle_animation(t_game *game);
 #endif

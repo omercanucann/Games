@@ -69,6 +69,9 @@ void	init_game(t_game *game, char *argv)
 	check_sprites(game);
 	init_enemies(game);
 	game->frame_count = 0;
+	game->idle_frame = 0;
+	game->is_moving = 0;
+	game->idle_offset_y = 0;
 	draw_map(game);
 }
 

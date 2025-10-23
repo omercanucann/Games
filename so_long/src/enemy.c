@@ -96,6 +96,7 @@ void	move_enemy(t_game *game, int enemy_idx)
 	game->enemies[enemy_idx].direction = dir;
 }
 
+
 int	check_player_collision(t_game *game)
 {
 	int	player_x;

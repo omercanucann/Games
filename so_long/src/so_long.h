@@ -26,7 +26,7 @@
 # define DIR_UP 2
 # define DIR_DOWN 3
 # define MAX_ENEMIES 50
-# define ENEMY_MOVE_DELAY 1200
+# define ENEMY_MOVE_DELAY 400
 typedef struct s_enemy
 {
 	int	x;

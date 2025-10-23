@@ -12,6 +12,13 @@
 
 #include "so_long.h"
 
+static int	abs_value(int n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
+}
+
 void	init_enemies(t_game *game)
 {
 	int	x;
@@ -62,38 +69,100 @@ static int	can_move_enemy(t_game *game, int x, int y)
 	return (1);
 }
 
-void	move_enemy(t_game *game, int enemy_idx)
+static int	get_best_direction_to_player(t_game *game, int enemy_idx)
+{
+	int	player_x;
+	int	player_y;
+	int	enemy_x;
+	int	enemy_y;
+	int	dx;
+	int	dy;
+
+	find_player_position(game, &player_x, &player_y);
+	enemy_x = game->enemies[enemy_idx].x;
+	enemy_y = game->enemies[enemy_idx].y;
+	dx = player_x - enemy_x;
+	dy = player_y - enemy_y;
+	
+	// Prioritize horizontal or vertical movement based on distance
+	if (dx == 0 && dy == 0)
+		return (-1); // Already at player position
+	
+	if (abs_value(dx) > abs_value(dy))
+	{
+		if (dx > 0)
+			return (DIR_RIGHT);
+		else
+			return (DIR_LEFT);
+	}
+	else
+	{
+		if (dy > 0)
+			return (DIR_DOWN);
+		else
+			return (DIR_UP);
+	}
+}
+
+static int	try_move_in_direction(t_game *game, int enemy_idx, int dir)
 {
 	int	new_x;
 	int	new_y;
-	int	dir;
+
+	new_x = game->enemies[enemy_idx].x;
+	new_y = game->enemies[enemy_idx].y;
+	
+	if (dir == DIR_RIGHT)
+		new_x++;
+	else if (dir == DIR_LEFT)
+		new_x--;
+	else if (dir == DIR_UP)
+		new_y--;
+	else if (dir == DIR_DOWN)
+		new_y++;
+	
+	if (can_move_enemy(game, new_x, new_y))
+	{
+		game->enemies[enemy_idx].x = new_x;
+		game->enemies[enemy_idx].y = new_y;
+		game->enemies[enemy_idx].direction = dir;
+		return (1);
+	}
+	return (0);
+}
+
+void	move_enemy(t_game *game, int enemy_idx)
+{
+	int	best_dir;
+	int	alternative_dirs[4];
 	int	tries;
 
-	dir = game->enemies[enemy_idx].direction;
+	// Get the best direction to chase the player
+	best_dir = get_best_direction_to_player(game, enemy_idx);
+	
+	if (best_dir == -1)
+		return; // Already at player position
+	
+	// Try the best direction first
+	if (try_move_in_direction(game, enemy_idx, best_dir))
+		return;
+	
+	// If blocked, try alternative directions
+	alternative_dirs[0] = (best_dir + 1) % 4;
+	alternative_dirs[1] = (best_dir + 3) % 4; // -1 but wrapped
+	alternative_dirs[2] = (best_dir + 2) % 4;
+	alternative_dirs[3] = best_dir;
+	
 	tries = 0;
-	while (tries < 4)
+	while (tries < 3)
 	{
-		new_x = game->enemies[enemy_idx].x;
-		new_y = game->enemies[enemy_idx].y;
-		if (dir == DIR_RIGHT)
-			new_x++;
-		else if (dir == DIR_LEFT)
-			new_x--;
-		else if (dir == DIR_UP)
-			new_y--;
-		else if (dir == DIR_DOWN)
-			new_y++;
-		if (can_move_enemy(game, new_x, new_y))
-		{
-			game->enemies[enemy_idx].x = new_x;
-			game->enemies[enemy_idx].y = new_y;
-			game->enemies[enemy_idx].direction = dir;
-			return ;
-		}
-		dir = (dir + 1) % 4;
+		if (try_move_in_direction(game, enemy_idx, alternative_dirs[tries]))
+			return;
 		tries++;
 	}
-	game->enemies[enemy_idx].direction = dir;
+	
+	// If all directions are blocked, keep current direction
+	game->enemies[enemy_idx].direction = best_dir;
 }
 
 

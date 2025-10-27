@@ -30,8 +30,6 @@ void	destroy_images(t_game *game)
 		mlx_destroy_image(game->mlx, game->floor);
 	if (game->enemy)
 		mlx_destroy_image(game->mlx, game->enemy);
-	if (game->enemy2)
-		mlx_destroy_image(game->mlx, game->enemy2);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 }
@@ -41,7 +39,6 @@ int	game_loop(t_game *game)
 	if (game->game_over)
 		close_game(game);
 	game->frame_count++;
-	update_idle_animation(game);
 	if (game->frame_count % ENEMY_MOVE_DELAY == 0)
 	{
 		update_enemies(game);

@@ -104,25 +104,3 @@ int	is_path_valid(t_game *game)
 	result = perform_flood_fill(game, map_copy);
 	return (result);
 }
-
-void	update_idle_animation(t_game *game)
-{
-	if (game->is_moving)
-	{
-		game->idle_frame = 0;
-		game->idle_offset_y = 0;
-		game->is_moving = 0;
-		return ;
-	}
-	game->idle_frame++;
-	if (game->idle_frame < 30)
-		game->idle_offset_y = 0;
-	else if (game->idle_frame < 60)
-		game->idle_offset_y = -2;
-	else if (game->idle_frame < 90)
-		game->idle_offset_y = 0;
-	else if (game->idle_frame < 120)
-		game->idle_offset_y = 2;
-	else
-		game->idle_frame = 0;
-}

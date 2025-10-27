@@ -79,7 +79,6 @@ void	move_player(t_game *game, int new_x, int new_y, int direction)
 	exit_result = check_exit_condition(game, new_x, new_y, move_count);
 	if (exit_result == 2)
 		return ;
-	game->is_moving = 1;
 	update_player_sprite(game, direction);
 	game->player_dir = direction;
 	update_player_map(game, pos, new_pos);

@@ -17,7 +17,7 @@ void	check_sprites(t_game *game)
 	if (!game->wall || !game->exit || !game->player
 		|| !game->collection || !game->floor
 		|| !game->player_right || !game->player_left || !game->player_front
-		|| !game->enemy || !game->enemy2)
+		|| !game->enemy)
 	{
 		if (!game->wall)
 			ft_error("wall error", game);
@@ -37,8 +37,6 @@ void	check_sprites(t_game *game)
 			ft_error("player_front error", game);
 		else if (!game->enemy)
 			ft_error("enemy error", game);
-		else if (!game->enemy2)
-			ft_error("enemy2 error", game);
 	}
 }
 
@@ -64,14 +62,12 @@ void	load_sprites(t_game *game)
 	game->collection = load_image(game, "./textures/collection.xpm");
 	game->floor = load_image(game, "./textures/floor.xpm");
 	game->enemy = load_image(game, "./textures/enemy.xpm");
-	game->enemy2 = load_image(game, "./textures/enemy2.xpm");
 }
 
 void	draw_tile(t_game *game, char tile, int x, int y)
 {
 	void	*img;
 	int		i;
-	int		draw_y;
 
 	if (tile == '1')
 		img = game->wall;
@@ -80,11 +76,10 @@ void	draw_tile(t_game *game, char tile, int x, int y)
 	else if (tile == 'P')
 	{
 		img = game->player;
-		draw_y = y * TILE_SIZE + game->idle_offset_y;
 		mlx_put_image_to_window(game->mlx, game->win, game->floor, 
 			x * TILE_SIZE, y * TILE_SIZE);
 		mlx_put_image_to_window(game->mlx, game->win,
-			img, x * TILE_SIZE, draw_y);
+			img, x * TILE_SIZE, y * TILE_SIZE);
 		return ;
 	}
 	else if (tile == 'C')
@@ -98,12 +93,8 @@ void	draw_tile(t_game *game, char tile, int x, int y)
 	{
 		if (game->enemies[i].x == x && game->enemies[i].y == y)
 		{
-			if ((game->frame_count / 8) % 2 == 0)
-				mlx_put_image_to_window(game->mlx, game->win,
-					game->enemy, x * TILE_SIZE, y * TILE_SIZE);
-			else
-				mlx_put_image_to_window(game->mlx, game->win,
-					game->enemy2, x * TILE_SIZE, y * TILE_SIZE);
+			mlx_put_image_to_window(game->mlx, game->win,
+				game->enemy, x * TILE_SIZE, y * TILE_SIZE);
 		}
 	}
 }

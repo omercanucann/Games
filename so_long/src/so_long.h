@@ -57,7 +57,6 @@ typedef struct s_game
 	void	*collection;
 	void	*floor;
 	void	*enemy;
-	void	*enemy2;
 	char	**map;
 	int		game_over;
 	int		map_width;
@@ -66,9 +65,6 @@ typedef struct s_game
 	t_enemy	enemies[MAX_ENEMIES];
 	int		enemy_count;
 	int		frame_count;
-	int		idle_frame;
-	int		is_moving;
-	int		idle_offset_y;
 }	t_game;
 
 void	ft_error(char *str, t_game *game);
@@ -99,5 +95,4 @@ void	update_enemies(t_game *game);
 int		check_player_collision(t_game *game);
 void	move_enemy(t_game *game, int enemy_idx);
 int		game_loop(t_game *game);
-void	update_idle_animation(t_game *game);
 #endif

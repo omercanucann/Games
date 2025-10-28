@@ -30,6 +30,8 @@ void	destroy_images(t_game *game)
 		mlx_destroy_image(game->mlx, game->floor);
 	if (game->enemy)
 		mlx_destroy_image(game->mlx, game->enemy);
+	if (game->enemy_left)
+		mlx_destroy_image(game->mlx, game->enemy_left);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 }

@@ -17,7 +17,7 @@ void	check_sprites(t_game *game)
 	if (!game->wall || !game->exit || !game->player
 		|| !game->collection || !game->floor
 		|| !game->player_right || !game->player_left || !game->player_front
-		|| !game->enemy)
+		|| !game->enemy || !game->enemy_left)
 	{
 		if (!game->wall)
 			ft_error("wall error", game);
@@ -37,6 +37,8 @@ void	check_sprites(t_game *game)
 			ft_error("player_front error", game);
 		else if (!game->enemy)
 			ft_error("enemy error", game);
+		else if (!game->enemy_left)
+			ft_error("enemy_left (enemysol.xpm) error", game);
 	}
 }
 
@@ -62,6 +64,8 @@ void	load_sprites(t_game *game)
 	game->collection = load_image(game, "./textures/collection.xpm");
 	game->floor = load_image(game, "./textures/floor.xpm");
 	game->enemy = load_image(game, "./textures/enemy.xpm");
+	/* left-facing enemy sprite (Turkish: enemysol.xpm) */
+	game->enemy_left = load_image(game, "./textures/enemysol.xpm");
 }
 
 void	draw_tile(t_game *game, char tile, int x, int y)
@@ -93,8 +97,12 @@ void	draw_tile(t_game *game, char tile, int x, int y)
 	{
 		if (game->enemies[i].x == x && game->enemies[i].y == y)
 		{
-			mlx_put_image_to_window(game->mlx, game->win,
-				game->enemy, x * TILE_SIZE, y * TILE_SIZE);
+			if (game->enemies[i].direction == DIR_LEFT && game->enemy_left)
+				mlx_put_image_to_window(game->mlx, game->win,
+					game->enemy_left, x * TILE_SIZE, y * TILE_SIZE);
+			else
+				mlx_put_image_to_window(game->mlx, game->win,
+					game->enemy, x * TILE_SIZE, y * TILE_SIZE);
 		}
 	}
 }

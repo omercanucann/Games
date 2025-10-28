@@ -57,6 +57,7 @@ typedef struct s_game
 	void	*collection;
 	void	*floor;
 	void	*enemy;
+	void	*enemy_left;
 	char	**map;
 	int		game_over;
 	int		map_width;

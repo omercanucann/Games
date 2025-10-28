@@ -179,8 +179,14 @@ int	check_player_collision(t_game *game)
 		if (game->enemies[i].x == player_x
 			&& game->enemies[i].y == player_y)
 		{
-			ft_printf("Game Over! You were caught by an enemy!\n");
-			game->game_over = 1;
+			if (!game->is_exploding)
+			{
+				ft_printf("Game Over! You were caught by an enemy!\n");
+				game->is_exploding = 1;
+				game->explosion_frame = 0;
+				game->explosion_x = player_x;
+				game->explosion_y = player_y;
+			}
 			return (1);
 		}
 		i++;

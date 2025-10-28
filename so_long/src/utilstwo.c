@@ -69,6 +69,10 @@ void	init_game(t_game *game, char *argv)
 	check_sprites(game);
 	init_enemies(game);
 	game->frame_count = 0;
+	game->is_exploding = 0;
+	game->explosion_frame = 0;
+	game->explosion_x = 0;
+	game->explosion_y = 0;
 	draw_map(game);
 }
 

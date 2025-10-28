@@ -104,3 +104,14 @@ int	is_path_valid(t_game *game)
 	result = perform_flood_fill(game, map_copy);
 	return (result);
 }
+
+void	update_explosion_animation(t_game *game)
+{
+	if (!game->is_exploding)
+		return ;
+	game->explosion_frame++;
+	if (game->explosion_frame > 100)
+	{
+		game->game_over = 1;
+	}
+}

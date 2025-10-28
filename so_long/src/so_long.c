@@ -32,6 +32,16 @@ void	destroy_images(t_game *game)
 		mlx_destroy_image(game->mlx, game->enemy);
 	if (game->enemy_left)
 		mlx_destroy_image(game->mlx, game->enemy_left);
+	if (game->explosion1)
+		mlx_destroy_image(game->mlx, game->explosion1);
+	if (game->explosion2)
+		mlx_destroy_image(game->mlx, game->explosion2);
+	if (game->explosion3)
+		mlx_destroy_image(game->mlx, game->explosion3);
+	if (game->explosion4)
+		mlx_destroy_image(game->mlx, game->explosion4);
+	if (game->explosion5)
+		mlx_destroy_image(game->mlx, game->explosion5);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 }
@@ -41,6 +51,7 @@ int	game_loop(t_game *game)
 	if (game->game_over)
 		close_game(game);
 	game->frame_count++;
+	update_explosion_animation(game);
 	if (game->frame_count % ENEMY_MOVE_DELAY == 0)
 	{
 		update_enemies(game);

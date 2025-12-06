@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://b78vy1j7v3fjj"]
+
+[ext_resource type="Script" uid="uid://dwyiqnjs7d7e0" path="res://scripts/motor.gd" id="1_yubou"]
+[ext_resource type="PackedScene" uid="uid://bf5w3m5deqxg" path="res://scenes/FuelGauge.tscn" id="2_rns2u"]
+
+[node name="GameUI" type="CanvasLayer"]
+script = ExtResource("1_yubou")
+
+[node name="FinishPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(400, 400)
+offset_left = -188.0
+offset_top = -191.0
+offset_right = 212.0
+offset_bottom = 209.0
+
+[node name="FinishLabel" type="Label" parent="FinishPanel"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 97.0
+offset_right = 399.0
+offset_bottom = 164.0
+theme_override_font_sizes/font_size = 48
+text = "RACE FINISH!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartButton" type="Button" parent="FinishPanel"]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 273.0
+offset_right = 150.0
+offset_bottom = 332.0
+text = "RESTART"
+
+[node name="QuitButton" type="Button" parent="FinishPanel"]
+layout_mode = 0
+offset_left = 254.0
+offset_top = 275.0
+offset_right = 342.0
+offset_bottom = 332.0
+text = "QUİT"
+
+[node name="TimerLabel" type="Label" parent="."]
+offset_left = 32.0
+offset_top = -7.0
+offset_right = 114.0
+offset_bottom = 38.0
+theme_override_font_sizes/font_size = 32
+text = "00:00"
+
+[node name="FuelGauge" parent="." instance=ExtResource("2_rns2u")]
+z_index = 10
+offset_left = 1045.4722
+offset_top = 50.58435
+offset_right = 1109.4722
+offset_bottom = 114.58435
+
+[connection signal="pressed" from="FinishPanel/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="FinishPanel/QuitButton" to="." method="_on_quit_button_pressed"]

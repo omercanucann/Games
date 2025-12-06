@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlmw458jgnhxy"]
+
+[ext_resource type="Script" uid="uid://dev05nnlxuuhq" path="res://scripts/start_screen.gd" id="1_tx5wa"]
+
+[node name="Start_Screen" type="Node2D"]
+position = Vector2(324, 141)
+script = ExtResource("1_tx5wa")
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 400.0
+offset_bottom = 400.0
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 108.0
+offset_right = 381.0
+offset_bottom = 211.0
+theme_override_font_sizes/font_size = 36
+text = "MOTORCYCLE GAME"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 199.0
+offset_right = 241.0
+offset_bottom = 246.0
+theme_override_font_sizes/font_size = 28
+text = "START"
+
+[connection signal="pressed" from="Panel/StartButton" to="." method="_on_start_button_pressed"]

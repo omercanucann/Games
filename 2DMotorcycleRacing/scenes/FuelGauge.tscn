@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bf5w3m5deqxg"]
+
+[ext_resource type="Texture2D" uid="uid://t6ps3e1dhkr6" path="res://assets/Tachimetrofull6.png" id="1_fd4jb"]
+[ext_resource type="Texture2D" uid="uid://bfpatfvr3aobn" path="res://assets/lancetta.png" id="2_dcskm"]
+
+[node name="FuelGauge" type="TextureRect"]
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("1_fd4jb")
+
+[node name="Needle" type="Sprite2D" parent="."]
+position = Vector2(32.041443, 31.13401)
+texture = ExtResource("2_dcskm")
